@@ -15,13 +15,6 @@ SQS_QUEUE_URL = os.getenv('SQS_QUEUE_URL', "")
 application = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
 
 hello_regex = re.compile("hello", re.IGNORECASE)
-# TODO Notes:
-# - Regex could be replaced with custom 'string in' filter, because 'string in' operator is faster than pattern matching
-
-
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
-
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     echo_message = "Sorry, I don’t understand."
@@ -39,9 +32,6 @@ def lambda_handler(event, context):
 
 
 async def main(event, context):
-    start_handler = CommandHandler('start', start)
-    application.add_handler(start_handler)
-
     hello_command_handler = CommandHandler('hello', hello_callback)
     application.add_handler(hello_command_handler)
 

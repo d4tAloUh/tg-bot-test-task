@@ -1,8 +1,6 @@
-import os
 from unittest.mock import patch
 
 import pytest
-import logging
 
 
 @pytest.fixture(scope="session", autouse=True)
