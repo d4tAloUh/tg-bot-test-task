@@ -14,7 +14,7 @@ queue = sqs.Queue(SQS_QUEUE_URL)
 
 
 def prepare_message_for_queue(event_body) -> dict[str, t.Any]:
-    return {
+    base_message = {
         "message": {
             "message_id": event_body["message"]["message_id"],
             "chat": {
@@ -24,8 +24,11 @@ def prepare_message_for_queue(event_body) -> dict[str, t.Any]:
             "text": event_body["message"]["text"],
             "date": event_body["message"]["date"]
         },
-        "update_id": event_body["update_id"]
+        "update_id": event_body["update_id"],
     }
+    if "entities" in event_body["message"]:
+        base_message["message"]["entities"] = event_body["message"]["entities"]
+    return base_message
 
 
 def lambda_handler(event, context):
