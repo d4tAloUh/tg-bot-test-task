@@ -1,4 +1,4 @@
-from unittest.mock import patch, MagicMock, PropertyMock
+from unittest.mock import patch, MagicMock, PropertyMock, AsyncMock
 
 import pytest
 from telegram import User, Bot
@@ -40,3 +40,8 @@ def mock_bot_user(bot_user):
     with patch.object(Bot, "_bot_user", new_callable=PropertyMock) as property_mock:
         property_mock.return_value = bot_user
         yield property_mock
+
+
+@pytest.fixture(scope='function', autouse=True)
+def mock_bot_get_me(monkeypatch):
+    monkeypatch.setattr(Bot, "get_me", AsyncMock())

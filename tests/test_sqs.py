@@ -87,7 +87,6 @@ async def test_main_process_update_hello(hello_callback_mock, message, monkeypat
             }
         ]
     }
-    monkeypatch.setattr(Bot, "get_me", AsyncMock())
     await sqs.main(event=event, context=context)
     assert await hello_callback_mock.was_called_once()
     assert hello_callback_mock.call_count == 1
@@ -124,7 +123,6 @@ async def test_main_process_update_echo(echo_callback_mock, message, monkeypatch
             }
         ]
     }
-    monkeypatch.setattr(Bot, "get_me", AsyncMock())
     await sqs.main(event=event, context=context)
     assert await echo_callback_mock.was_called_once()
     assert echo_callback_mock.call_count == 1
